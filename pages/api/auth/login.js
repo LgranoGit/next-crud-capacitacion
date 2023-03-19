@@ -6,7 +6,7 @@ export default function loginHandler(req, res) {
 
   if (email === "a@a.com" && password === "123") {
     // expire in 30 days    
-    console.log(Math.floor(Date.now() / 1000));
+    // console.log(Math.floor(Date.now() / 1000));
     const secret = new TextEncoder().encode(process.env.SECRET);
     const token = sign(
       {
@@ -18,7 +18,7 @@ export default function loginHandler(req, res) {
     );
 
     const serialized = serialize("Token", token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,

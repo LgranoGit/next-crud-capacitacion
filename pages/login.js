@@ -7,15 +7,15 @@ import Image from 'react-bootstrap/Image';
 
 function Home() {
   const [credentials, setCredentials] = useState({
-    email: "a@a.com",
-    password: "123",
+    email: "",
+    password: "",
   });
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await axios.post("/api/auth/login", credentials);
-    console.log(res);
+    //console.log(res);
 
     if (res.status === 200) {
       router.push("/");
@@ -55,7 +55,7 @@ function Home() {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Submit
+          Ingresar
         </Button>
       </Form>      
     </div>

@@ -4,9 +4,14 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
+import jwt_decode from "jwt-decode";
+import {useState,useEffect} from 'react'
+
 
 export default function BarraNav() {
   const router = useRouter();
+  const [usuario, setUsuario] = useState();
   const logout = async () => {
     try {
       await axios.get("/api/auth/logout");
@@ -14,12 +19,20 @@ export default function BarraNav() {
       console.error(error.message);
     }
     router.push("/login");
-  }; 
-  
+  };
+
+  useEffect(() => {
+    const token = getCookie("Token");
+    //console.log(token);
+    const { username } = jwt_decode(token);
+    //console.log(username);
+    setUsuario(username);
+  }, []);
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Idea Computacion</Navbar.Brand>
+        <Navbar.Brand href="#home">Usuario: { usuario }</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -34,7 +47,9 @@ export default function BarraNav() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#" onClick={() => logout()}>Salir</Nav.Link>           
+            <Nav.Link href="#" onClick={() => logout()}>
+              Salir
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

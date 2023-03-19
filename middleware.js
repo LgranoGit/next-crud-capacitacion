@@ -4,7 +4,6 @@ import { compactVerify } from "jose";
 export async function middleware(request) {
   const jwt = request.cookies.get("Token");
   //console.log(jwt)
-  //console.log(jwt)
 
   if (!jwt) return NextResponse.redirect(new URL("/login", request.url));
 
