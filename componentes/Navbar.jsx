@@ -6,10 +6,13 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import jwt_decode from "jwt-decode";
-import {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react';
+import { Message_data } from "../context/context";
+import { useContext } from "react";
 
 
 export default function BarraNav() {
+  const { tarjetas } = useContext(Message_data);
   const router = useRouter();
   const [usuario, setUsuario] = useState();
   const logout = async () => {
@@ -33,6 +36,7 @@ export default function BarraNav() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand href="#home">Usuario: { usuario }</Navbar.Brand>
+        <Navbar.Brand href="#home">{ tarjetas }</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">

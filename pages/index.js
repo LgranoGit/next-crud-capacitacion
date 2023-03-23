@@ -2,13 +2,14 @@ import Tarjeta from "@/componentes/Tarjeta";
 import axios from "axios";
 import Layout from "@/componentes/Layout";
 import { Message_data } from "../context/context";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home({ articulos }) {
   //console.log(articulos);
   const { message, setMessage } = useContext(Message_data);
+
   if (message != undefined) {
     //console.log(message);
     toast.success(message, {
@@ -19,7 +20,11 @@ export default function Home({ articulos }) {
   return (
     <>
       <Layout>
-        <Tarjeta className="mt-5" articulos={articulos} />
+        {articulos.length===0 ? (
+          <h1 className="text-center">No hay ninguna tarjeta</h1>
+        ) : (
+          <Tarjeta className="mt-5" articulos={articulos} />
+        )}
       </Layout>
       <ToastContainer />
     </>
