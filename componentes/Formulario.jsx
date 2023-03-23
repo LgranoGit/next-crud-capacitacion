@@ -3,26 +3,28 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Message_data } from "../context/context";
+import { useContext } from "react";
+
 
 export default function Formulario() {
   const router = useRouter();
   const [id, setId] = useState(0);
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
+  const { message, setMessage } = useContext(Message_data);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (id == 0) {
       //insertar
-      const resul = await axios.post("/api/", { nombre, precio });
-      toast("Insertado");      
-      router.push("/");  
+      const resul = await axios.post("/api/", { nombre, precio });          
+      router.push("/"); 
+      setMessage("Registro insertado"); 
     } else {
       //updatear
       const resul = await axios.put("/api/" + id, { id, nombre, precio });
-      toast("Modificado el registro" + id);
+      setMessage("Modificado el registro " + id);
       router.push("/");        
     }
   };

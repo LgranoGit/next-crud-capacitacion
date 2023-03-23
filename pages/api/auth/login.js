@@ -31,5 +31,5 @@ export default function loginHandler(req, res) {
     });
   }
 
-  return res.status(401).json({ error: "Invalid credentials" });
+  return res.status(204).json({ error: "Invalid credentials" });
 }

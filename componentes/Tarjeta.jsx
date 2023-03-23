@@ -6,17 +6,24 @@ import { Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Message_data } from "../context/context";
+import { useContext } from "react";
 
 export default function Tarjeta({ articulos }) {
   const router = useRouter();
+  const { message, setMessage } = useContext(Message_data);
 
   async function handleDelete(e) {
     const result = await axios.delete(`/api/${e.target.id}`);
-    toast(`Ha sido eliminado el registro ${e.target.id}`);
+    toast.success(`Ha sido eliminado el registro ${e.target.id}`, {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
+    setMessage(null);
     router.push("/");
   }
 
   async function handleUpdate(e) {
+    setMessage(null);
     router.push(`/edit/${e.target.id}`);
   }
 
